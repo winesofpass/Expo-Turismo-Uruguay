@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WinesOf PASS Sorteo</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  background:
+    radial-gradient(circle at top left, rgba(204,61,111,.18), transparent 26%),
+    linear-gradient(180deg,#0b0910 0%,#09080c 100%);
+  color: white;
+}
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+}
+.btn {
+  background: linear-gradient(135deg,#a1124f,#cf255f);
+}
+.input {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+}
+</style>
+</head>
+
+<body class="p-6">
+
+<div class="max-w-xl mx-auto space-y-6">
+
+<h1 class="text-3xl font-bold text-center">
+Participá por 100 membresías WinesOf PASS
+</h1>
+
+<p class="text-center opacity-80">
+20 de por vida · 30 por 1 año · 50 por 6 meses
+</p>
+
+<div class="glass p-6 rounded-xl space-y-4">
+
+<input id="nombre" class="input" placeholder="Nombre completo">
+<input id="email" class="input" placeholder="Email">
+<input id="pais" class="input" placeholder="País">
+<input id="celular" class="input" placeholder="Celular">
+
+<label>
+<input type="checkbox" id="consent"> Acepto bases
+</label>
+
+<button onclick="enviar()" class="btn w-full p-3 rounded">
+Quiero participar
+</button>
+
+</div>
+
+<div id="ok" class="hidden text-center space-y-3">
+<h2>¡Ya estás participando!</h2>
+<p>Tu número: <b id="num"></b></p>
+
+<a id="wa" target="_blank" class="btn px-4 py-2 rounded">
+Confirmar por WhatsApp
+</a>
+</div>
+
+</div>
+
+<script>
+
+const URL = "https://script.google.com/macros/s/AKfycbwYJYh9MXcTRbnmZzzmIQ9oaj6xV5HEfXwNKS8faLiML82VuUQy9bniEUTMTbaebYjU/exec";
+
+async function enviar(){
+
+  const data = {
+    nombre: nombre.value,
+    email: email.value,
+    pais: pais.value,
+    celular: celular.value,
+    consentimiento: consent.checked
+  };
+
+  const r = await fetch(URL,{
+    method:"POST",
+    body: JSON.stringify(data)
+  });
+
+  const j = await r.json();
+
+  num.innerText = "#" + j.numero;
+
+  const msg = `Hola, ya me registré en el sorteo WinesOf PASS. Mi número es ${j.numero}`;
+
+  wa.href = "https://wa.me/59892341043?text="+encodeURIComponent(msg);
+
+  ok.classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>

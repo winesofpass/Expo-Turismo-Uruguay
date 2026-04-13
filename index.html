@@ -1,107 +1,455 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinesOf PASS Sorteo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WinesOf PASS · Sorteo Expoturismo Uruguay 2026</title>
+  <meta name="description" content="Participá por 100 membresías WinesOf PASS en Expoturismo Uruguay 2026: 20 de por vida, 30 por 1 año y 50 por 6 meses." />
+  <meta name="theme-color" content="#5e0b2d" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg:#0b0910;
+      --brand:#8f0f45;
+      --brand2:#cc3d6f;
+      --muted:#ad9aa3;
+      --gold:#e5b76b;
+    }
 
-<script src="https://cdn.tailwindcss.com"></script>
+    html { scroll-behavior: smooth; }
 
-<style>
-body {
-  background:
-    radial-gradient(circle at top left, rgba(204,61,111,.18), transparent 26%),
-    linear-gradient(180deg,#0b0910 0%,#09080c 100%);
-  color: white;
-}
-.glass {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-}
-.btn {
-  background: linear-gradient(135deg,#a1124f,#cf255f);
-}
-.input {
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
-}
-</style>
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(204,61,111,.18), transparent 26%),
+        radial-gradient(circle at 90% 10%, rgba(242,163,184,.10), transparent 20%),
+        radial-gradient(circle at 50% 100%, rgba(143,15,69,.18), transparent 26%),
+        linear-gradient(180deg,#0b0910 0%,#09080c 100%);
+      color: white;
+      padding-top: 88px;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(11,9,16,.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .glass {
+      background: linear-gradient(180deg, rgba(28,18,26,.9), rgba(17,11,17,.95));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      backdrop-filter: blur(16px);
+    }
+
+    .glass-soft {
+      background: linear-gradient(180deg, rgba(34,20,30,.72), rgba(16,10,16,.82));
+      border: 1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-chip {
+      background: linear-gradient(135deg, rgba(143,15,69,.22), rgba(204,61,111,.16));
+      border: 1px solid rgba(242,163,184,.25);
+    }
+
+    .brand-button {
+      background: linear-gradient(135deg,#a1124f 0%,#cf255f 100%);
+      box-shadow: 0 18px 40px rgba(161,18,79,.32);
+    }
+
+    .secondary-button {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .input {
+      width: 100%;
+      border-radius: .95rem;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(255,255,255,.04);
+      color: #fff;
+      padding: .95rem 1rem;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .input:focus {
+      border-color: rgba(242,163,184,.55);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 0 0 4px rgba(204,61,111,.15);
+    }
+
+    .hero-grid {
+      display:grid;
+      gap:1.5rem;
+    }
+
+    .premium-panel {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.10), transparent 18%),
+        radial-gradient(circle at 82% 16%, rgba(255,255,255,.07), transparent 16%),
+        radial-gradient(circle at 50% 60%, rgba(255,255,255,.04), transparent 26%),
+        linear-gradient(135deg,#7a0e39 0%,#930f47 38%,#6e0a31 100%);
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 24px 54px rgba(0,0,0,.30);
+    }
+
+    .premium-panel:before {
+      content:'';
+      position:absolute;
+      right:-56px;
+      bottom:-66px;
+      width:180px;
+      height:180px;
+      border-radius:999px;
+      border:8px solid rgba(255,255,255,.06);
+    }
+
+    .count-box {
+      min-width: 72px;
+    }
+
+    .prize-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .status-dot {
+      width: .6rem;
+      height: .6rem;
+      border-radius: 999px;
+      display: inline-block;
+      background: #4ade80;
+      box-shadow: 0 0 18px rgba(74,222,128,.45);
+    }
+
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: minmax(0,1.05fr) minmax(360px, 480px);
+        align-items: start;
+      }
+
+      .sticky-form {
+        position: sticky;
+        top: 108px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body { padding-top: 76px; }
+    }
+  </style>
 </head>
+<body class="text-white antialiased selection:bg-rose-700/40 selection:text-white">
+  <header class="site-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
+      <div>
+        <p class="text-xl font-semibold tracking-tight">WinesOf PASS</p>
+        <p class="text-xs uppercase tracking-[0.22em] text-white/50">Sorteo especial feria</p>
+      </div>
+      <a href="#formulario" class="secondary-button rounded-full px-4 py-2 text-sm font-medium">Participar ahora</a>
+    </div>
+  </header>
 
-<body class="p-6">
+  <main>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8">
+      <div class="hero-grid">
+        <div class="space-y-6">
+          <div class="flex flex-wrap gap-3">
+            <span class="brand-chip rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em]">Expoturismo Uruguay 2026</span>
+            <span class="brand-chip rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em]">100 membresías en juego</span>
+            <span class="brand-chip rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em]">Sorteo oficial</span>
+          </div>
 
-<div class="max-w-xl mx-auto space-y-6">
+          <div class="space-y-4">
+            <p class="text-sm uppercase tracking-[0.28em] text-white/55">Tu próxima salida puede empezar acá</p>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.02] tracking-tight">
+              Participá por <span class="text-amber-300">100 membresías</span> WinesOf PASS
+            </h1>
+            <p class="text-lg sm:text-xl text-white/78 max-w-3xl">
+              Registrate en la feria y entrá en el sorteo de <strong>20 membresías gratis de por vida</strong>,
+              <strong>30 membresías gratis por 1 año</strong> y <strong>50 membresías gratis por 6 meses</strong>.
+            </p>
+            <p class="text-white/62 max-w-2xl">
+              Completá tus datos, recibí tu número de participación y descubrí una nueva forma de salir, disfrutar y ahorrar
+              en propuestas vinculadas al vino, la gastronomía, el turismo y mucho más.
+            </p>
+          </div>
 
-<h1 class="text-3xl font-bold text-center">
-Participá por 100 membresías WinesOf PASS
-</h1>
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div class="prize-card rounded-3xl p-5">
+              <p class="text-4xl font-bold text-amber-300">20</p>
+              <p class="mt-2 text-sm uppercase tracking-[0.18em] text-white/55">Membresías</p>
+              <p class="text-xl font-semibold mt-2">de por vida</p>
+            </div>
+            <div class="prize-card rounded-3xl p-5">
+              <p class="text-4xl font-bold text-amber-300">30</p>
+              <p class="mt-2 text-sm uppercase tracking-[0.18em] text-white/55">Membresías</p>
+              <p class="text-xl font-semibold mt-2">por 1 año</p>
+            </div>
+            <div class="prize-card rounded-3xl p-5">
+              <p class="text-4xl font-bold text-amber-300">50</p>
+              <p class="mt-2 text-sm uppercase tracking-[0.18em] text-white/55">Membresías</p>
+              <p class="text-xl font-semibold mt-2">por 6 meses</p>
+            </div>
+          </div>
 
-<p class="text-center opacity-80">
-20 de por vida · 30 por 1 año · 50 por 6 meses
-</p>
+          <div class="glass-soft rounded-3xl p-5 sm:p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="status-dot"></span>
+              <p class="text-sm uppercase tracking-[0.18em] text-white/70">Cuenta regresiva</p>
+            </div>
+            <div class="flex flex-wrap gap-3" id="countdown">
+              <div class="count-box glass-soft rounded-2xl px-4 py-3 text-center">
+                <div class="text-2xl font-bold" id="days">00</div>
+                <div class="text-xs uppercase tracking-[0.18em] text-white/55 mt-1">Días</div>
+              </div>
+              <div class="count-box glass-soft rounded-2xl px-4 py-3 text-center">
+                <div class="text-2xl font-bold" id="hours">00</div>
+                <div class="text-xs uppercase tracking-[0.18em] text-white/55 mt-1">Horas</div>
+              </div>
+              <div class="count-box glass-soft rounded-2xl px-4 py-3 text-center">
+                <div class="text-2xl font-bold" id="minutes">00</div>
+                <div class="text-xs uppercase tracking-[0.18em] text-white/55 mt-1">Min</div>
+              </div>
+              <div class="count-box glass-soft rounded-2xl px-4 py-3 text-center">
+                <div class="text-2xl font-bold" id="seconds">00</div>
+                <div class="text-xs uppercase tracking-[0.18em] text-white/55 mt-1">Seg</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div class="glass p-6 rounded-xl space-y-4">
+        <div id="formulario" class="sticky-form">
+          <div class="premium-panel rounded-[2rem] p-6 sm:p-7">
+            <p class="text-sm uppercase tracking-[0.22em] text-white/70">Activá tu participación</p>
+            <h2 class="text-2xl sm:text-3xl font-bold mt-3 mb-2">Llevate tu número para el sorteo</h2>
+            <p class="text-white/78 mb-6">Completá tus datos en segundos y confirmá tu participación por WhatsApp.</p>
 
-<input id="nombre" class="input" placeholder="Nombre completo">
-<input id="email" class="input" placeholder="Email">
-<input id="pais" class="input" placeholder="País">
-<input id="celular" class="input" placeholder="Celular">
+            <div class="space-y-4">
+              <input id="nombre" class="input" placeholder="Nombre completo" />
+              <input id="email" class="input" placeholder="Email" type="email" />
+              <input id="pais" class="input" placeholder="País" />
+              <input id="celular" class="input" placeholder="Celular / WhatsApp" />
 
-<label>
-<input type="checkbox" id="consent"> Acepto bases
-</label>
+              <label class="flex items-start gap-3 text-sm text-white/80">
+                <input id="consentimiento" type="checkbox" class="mt-1 rounded" />
+                <span>Acepto las bases y condiciones del sorteo y autorizo el uso de mis datos para validar la participación.</span>
+              </label>
 
-<button onclick="enviar()" class="btn w-full p-3 rounded">
-Quiero participar
-</button>
+              <button id="submitBtn" onclick="enviarFormulario()" class="brand-button w-full rounded-2xl px-5 py-4 font-semibold text-base">
+                Quiero mi número para el sorteo
+              </button>
 
-</div>
+              <p class="text-xs text-white/50 leading-relaxed">
+                Participación sujeta a validación. Los resultados se publicarán en esta misma página.
+              </p>
+            </div>
 
-<div id="ok" class="hidden text-center space-y-3">
-<h2>¡Ya estás participando!</h2>
-<p>Tu número: <b id="num"></b></p>
+            <div id="errorMsg" class="hidden mt-5 rounded-2xl border border-red-400/20 bg-red-500/10 p-4 text-sm text-red-200"></div>
 
-<a id="wa" target="_blank" class="btn px-4 py-2 rounded">
-Confirmar por WhatsApp
-</a>
-</div>
+            <div id="resultado" class="hidden mt-6 glass rounded-3xl p-5">
+              <p class="text-sm uppercase tracking-[0.18em] text-white/60">¡Ya estás participando!</p>
+              <p class="text-white/80 mt-2">Tu número para el sorteo es:</p>
+              <p id="numeroAsignado" class="text-4xl font-bold tracking-tight mt-2 text-amber-300">#000</p>
+              <p class="text-white/70 mt-3 text-sm">
+                Estás participando por 20 membresías de por vida, 30 por 1 año y 50 por 6 meses.
+              </p>
+              <div class="mt-5 flex flex-col sm:flex-row gap-3">
+                <a id="whatsappLink" target="_blank" class="brand-button inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold">
+                  Confirmar por WhatsApp
+                </a>
+                <a href="#bases" class="secondary-button inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold">
+                  Ver bases
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</div>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="glass rounded-[2rem] p-6 sm:p-7">
+          <p class="text-sm uppercase tracking-[0.2em] text-white/55">Qué es WinesOf PASS</p>
+          <h3 class="text-2xl font-bold mt-3">Una membresía digital pensada para salir, disfrutar y ahorrar</h3>
+          <p class="text-white/78 mt-4 leading-relaxed">
+            WinesOf PASS conecta personas con beneficios, experiencias y propuestas seleccionadas vinculadas al vino,
+            la gastronomía, el turismo y mucho más. La idea es simple: acceder a una nueva forma de descubrir lugares y vivir mejor cada salida.
+          </p>
+        </div>
 
-<script>
+        <div class="glass rounded-[2rem] p-6 sm:p-7">
+          <p class="text-sm uppercase tracking-[0.2em] text-white/55">Participación</p>
+          <h3 class="text-2xl font-bold mt-3">Rápida, clara y pensada para feria</h3>
+          <ul class="mt-4 space-y-3 text-white/78">
+            <li>• Completás tus datos en segundos.</li>
+            <li>• Recibís tu número de participación en pantalla.</li>
+            <li>• Podés confirmarlo por WhatsApp a +598 92 341 043.</li>
+            <li>• Los resultados se publicarán en esta misma página.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-const URL = "https://script.google.com/macros/s/AKfycbwYJYh9MXcTRbnmZzzmIQ9oaj6xV5HEfXwNKS8faLiML82VuUQy9bniEUTMTbaebYjU/exec";
+    <section id="bases" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="glass rounded-[2rem] p-6 sm:p-7">
+        <p class="text-sm uppercase tracking-[0.2em] text-white/55">Bases breves</p>
+        <div class="grid lg:grid-cols-2 gap-6 mt-4 text-white/78">
+          <div class="space-y-3">
+            <p>• Una participación por persona, salvo validación distinta por parte de la organización.</p>
+            <p>• El registro debe contener datos reales y verificables.</p>
+            <p>• La organización podrá auditar datos antes de confirmar premios.</p>
+          </div>
+          <div class="space-y-3">
+            <p>• Los ganadores se publicarán en esta misma landing.</p>
+            <p>• La participación implica aceptación de estas condiciones.</p>
+            <p>• El contacto operativo principal será por WhatsApp y/o email según corresponda.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-async function enviar(){
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-14">
+      <div class="glass rounded-[2rem] p-6 sm:p-7">
+        <p class="text-sm uppercase tracking-[0.2em] text-white/55">Resultados del sorteo</p>
+        <div class="mt-4 rounded-3xl border border-white/8 bg-white/4 p-5">
+          <p class="text-white/72">Aún no hay resultados publicados.</p>
+          <p class="text-sm text-white/50 mt-2">Cuando el sorteo se cierre, los nombres y números ganadores aparecerán acá.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  const data = {
-    nombre: nombre.value,
-    email: email.value,
-    pais: pais.value,
-    celular: celular.value,
-    consentimiento: consent.checked
-  };
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCN5QOs4zdy1B0cFqiFU2TQoi9oyouPTi0XZ2rcPKEgJgrTnB7a2dDqrSzjZMt8LfQ/exec";
+    const DEADLINE = "2026-04-19T19:00:00-03:00";
 
-  const r = await fetch(URL,{
-    method:"POST",
-    body: JSON.stringify(data)
-  });
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
 
-  const j = await r.json();
+    function startCountdown() {
+      function update() {
+        const now = new Date().getTime();
+        const end = new Date(DEADLINE).getTime();
+        const diff = end - now;
 
-  num.innerText = "#" + j.numero;
+        if (diff <= 0) {
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          return;
+        }
 
-  const msg = `Hola, ya me registré en el sorteo WinesOf PASS. Mi número es ${j.numero}`;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
 
-  wa.href = "https://wa.me/59892341043?text="+encodeURIComponent(msg);
+        document.getElementById("days").textContent = pad(days);
+        document.getElementById("hours").textContent = pad(hours);
+        document.getElementById("minutes").textContent = pad(minutes);
+        document.getElementById("seconds").textContent = pad(seconds);
+      }
 
-  ok.classList.remove("hidden");
-}
+      update();
+      setInterval(update, 1000);
+    }
 
-</script>
+    function jsonpRequest(url) {
+      return new Promise((resolve, reject) => {
+        const callbackName = "jsonp_cb_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+        const script = document.createElement("script");
 
+        window[callbackName] = function(data) {
+          resolve(data);
+          cleanup();
+        };
+
+        function cleanup() {
+          try { delete window[callbackName]; } catch(e) {}
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        script.onerror = function() {
+          reject(new Error("No se pudo conectar con Apps Script."));
+          cleanup();
+        };
+
+        const separator = url.includes("?") ? "&" : "?";
+        script.src = `${url}${separator}callback=${callbackName}`;
+
+        document.body.appendChild(script);
+      });
+    }
+
+    async function enviarFormulario() {
+      const nombre = document.getElementById("nombre").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const pais = document.getElementById("pais").value.trim();
+      const celular = document.getElementById("celular").value.trim();
+      const consentimiento = document.getElementById("consentimiento").checked;
+
+      const errorBox = document.getElementById("errorMsg");
+      const submitBtn = document.getElementById("submitBtn");
+
+      errorBox.classList.add("hidden");
+      errorBox.textContent = "";
+
+      if (!nombre || !email || !pais || !celular || !consentimiento) {
+        errorBox.textContent = "Completá todos los campos y aceptá las bases para participar.";
+        errorBox.classList.remove("hidden");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando...";
+
+      try {
+        const params = new URLSearchParams({
+          action: "register",
+          nombre,
+          email,
+          pais,
+          celular,
+          consentimiento: "true",
+          origen: "Expoturismo 2026"
+        });
+
+        const data = await jsonpRequest(`${SCRIPT_URL}?${params.toString()}`);
+
+        if (!data.success) {
+          throw new Error(data.error || "No se pudo registrar la participación.");
+        }
+
+        const numero = "#" + String(data.numero).padStart(3, "0");
+        document.getElementById("numeroAsignado").textContent = numero;
+
+        const mensaje = `Hola, ya me registré en el sorteo de WinesOf PASS en Expoturismo Uruguay 2026. Mi número de participación es: ${numero}. Nombre: ${nombre}`;
+        document.getElementById("whatsappLink").href =
+          `https://wa.me/59892341043?text=${encodeURIComponent(mensaje)}`;
+
+        document.getElementById("resultado").classList.remove("hidden");
+        document.getElementById("resultado").scrollIntoView({ behavior: "smooth", block: "center" });
+
+      } catch (err) {
+        errorBox.textContent = err.message || "Hubo un error al enviar el formulario.";
+        errorBox.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Quiero mi número para el sorteo";
+      }
+    }
+
+    startCountdown();
+  </script>
 </body>
 </html>
